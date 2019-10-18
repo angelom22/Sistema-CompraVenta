@@ -83,7 +83,7 @@ class UserController extends Controller
             $path = $request->file('imagen')->storeAs('public/img/usuario', $fileNameToStore);
         } else {
 
-            $fileNameToStore = "noimagen.jpg";
+            $fileNameToStore = "noimagen.png";
         }
         $user->imagen = $fileNameToStore;
         /**FIN DE REGISTRAR IMAGEN DEL USUARIO */
@@ -144,7 +144,7 @@ class UserController extends Controller
             /*si la imagen que se subio es distinta a la que esta por defecto
             entonces se eliminaria la imagen anterior, eso es para evitar
             acumular imagenes en el servidor */
-            if($user->imagen != 'noimagen.jpg'){
+            if($user->imagen != 'noimagen.png'){
                 Storage::delete('public/img/usuario/.$user->imagen');
             }
 

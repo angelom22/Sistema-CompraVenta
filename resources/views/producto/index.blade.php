@@ -113,18 +113,8 @@
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <tr class="bg-primary">
-                            <th>Imagen</th>
-                            <th>Categoría</th>
-                            <th>Producto</th>
-                            <th>Código</th>
-                            <th>Precio Venta</th>
-                            <th>Precio Costo</th>
-                            <th>Stock</th>
-                            <th>Medición</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
+                        
+                        
                     </tfoot>
                 </table>
 

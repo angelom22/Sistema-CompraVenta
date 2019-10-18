@@ -15,7 +15,7 @@
                         
                             <span class="input-group-addon"><i class="icon-user"></i></span>
                             <input type="text" value="{{old('usuario')}}" name="usuario" id="usuario" class="form-control" placeholder="Usuario">
-                            {!!$errors->first('usuario','<span class="invalid-feedback">:message<span>')!!}
+                            <!-- {!!$errors->first('usuario','<span class="invalid-feedback">:message<span>')!!} -->
                         
                     </div>
 
@@ -23,7 +23,7 @@
                         
                         <span class="input-group-addon"><i class="icon-lock"></i></span>
                             <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña">
-                            {!!$errors->first('password','<span class="invalid-feedback">:message<span>')!!}
+                            <!-- {!!$errors->first('password','<span class="invalid-feedback">:message<span>')!!} -->
                         
                     </div>
 
@@ -36,7 +36,20 @@
                     </div>
                     </div>
 
+                    <div style="clear:both"></div>
+
+
                 </form>
+
+                    @if(!$errors->isEmpty())
+                    <div class="alert alert-danger" role="alert">
+                        <ul class="list-unstyled">
+                            @foreach($errors->all() as $err)
+                            <li>{{ $err }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 
             </div>
         </div>
