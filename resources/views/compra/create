@@ -1,0 +1,77 @@
+<main class="main">
+        <div class="card-body">
+            <h2>Agregar Compra</h2>
+
+            <span style="color:red;">(*)<strong> Campos obligatorios<strong>/</span><br>
+
+            <h3 class="text-center">LLenar el fomulario</h3>
+            
+            <form action="{{route('compra.store)}}" method="POST">
+            {{csrf_field()}}
+
+                <div class="form-group row">
+                    <div class="col-md-8">
+                        <label for="nombre" class="form-control-label">Nombre del Proveedor</label>
+                            <select name="id_proveedor" id="id_proveedor" class="form-control selectpicker">
+                                <option value="0" disabled>Seleccione</option>
+                                @foreach($proveedores as $proveedor)
+                                <option value="{{$proveedor->id}}">{{$proveedor->nombre_empresa}}</option>
+                                @endforeach
+                            </select>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <div class="col-md-8">
+                        <label for="documento" class="form-control-label">Documento</label>
+                        <select name="tipo_identificacion" id="tipo_identificacion" class="form-control">
+                            <option value="0" disabled>Seleccione</option>
+                            <option value="FACTURA">Factura</option>
+                            <option value="TICKET">Ticket</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <div class="col-md-8">
+                        <label for="num_compra" class="form-control-label">Número de Compra</label>
+                        <input type="text" name="num_compra" id="num_compra" class="form-control" placeholder="Ingrese el número de compra">
+                    </div>
+                </div>
+
+                <div class="form-group row border">
+                    <div class="col-md-8">
+                        <label for="id_producto" class="form-control-label">Producto</label>
+                        <select name="id_producto" id="id_producto" class="form-control selectpicker">
+                            <option value="0" disabled>Seleccione</option>
+                            @foreach($productos as $producto)
+                            <option value="{{$producto->id}}">{{$producto->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="cantidad" class="form-control-label">Cantidad</label>
+                        <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Ingrese la cantidad">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label for="precio_costo" class="form-control-label">Precio de Costo</label>
+                        <input type="number" id="precio_costo" name="precio_costo" class="form-control" placeholder="Ingrese el precio de costo">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <button type="button" id="agregar" class="btn btn-primary">
+                        <i class="fa fa-plus fa-2x"></i>
+                        Agregar detalle
+                    </button>
+                </div>  
+                <br><br>
+            </form>
+        </div>
+    </main>

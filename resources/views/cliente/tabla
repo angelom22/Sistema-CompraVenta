@@ -1,0 +1,17 @@
+<tbody>
+    @foreach($clientes as $cliente)
+        <tr>
+            <td>{{$cliente->nombre}}</td>
+            <td>{{$cliente->TipoDocumento->letra_documento}}</td>
+            <td>{{$cliente->num_documento}}</td>
+            <td>{{$cliente->direccion}}</td>
+            <td>{{$cliente->telefono}}</td>
+            <td>{{$cliente->email}}</td>
+            <td class="text-center">
+                <a class="btn btn-info" title="Ver y Editar Cliente" data-id_cliente="{{$cliente->id}}" data-nombre="{{$cliente->nombre}}" data-tipo_documento="{{$cliente->TipoDocumento->id}}" data-num_documento="{{$cliente->num_documento}}" data-direccion="{{$cliente->direccion}}" data-telefono="{{$cliente->telefono}}" data-email="{{$cliente->email}}" data-toggle="modal" data-target="#abrirmodalEditar">
+                    <i class="fa fa-edit"></i>
+                </a>
+            </td> 
+        </tr>
+    @endforeach
+</tbody>
