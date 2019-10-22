@@ -246,10 +246,10 @@
 
                 // alert("Rellene todos los campos del detalle de la compra, revise los datos del producto");
                 
-                Swal.fire({
+                swal.fire({
                 type: 'error',
                 //title: 'Oops...',
-                text: 'Rellene todos los campos del detalle de la compras',
+                text: 'Rellene todos los campos del detalle de la compra',
                 
                 })
             

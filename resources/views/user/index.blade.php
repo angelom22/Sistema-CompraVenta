@@ -119,7 +119,7 @@
 </main>
         <!-- /Fin del contenido principal -->
 
-@include('user.modal')
+@include('user.recursos.modal')
 
 
 @endsection

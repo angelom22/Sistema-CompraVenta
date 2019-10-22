@@ -8,6 +8,9 @@
     <meta name="description" content="Sistema Compras-Ventas con Laravel y Vue Js- webtraining-it.com">
     <meta name="keyword" content="Sistema Compras-Ventas con Laravel y Vue Js">
     <title>Proyecto Compra-Venta</title>
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="image/png" href="{{asset('img/favicon.png')}}">
     <!-- Icons -->
     <link href="{{asset('css/coreui-icons.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/flag-icon.min.css')}}" rel="stylesheet">
@@ -18,7 +21,13 @@
     <link href="{{asset('css/pace.min.css')}}" rel="stylesheet">
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/datatables.min.css')}}"/>
+    <!-- PNotify -->
+    <link href="{{asset('node_modules/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css"> 
     
+    <link href="{{ asset('css/pnotify.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/pnotify.buttons.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/pnotify.nonblock.css') }}" rel="stylesheet"/>
+       
     <!-- Contenido Styles Personales -->
     @yield('css')
 </head>
@@ -93,6 +102,8 @@
         <span class="ml-auto">Desarrollado por <a href="https://www.linkedin.com/in/angelo-meneses-9076a6159/" target="_blank">Ing. Angelo Meneses</a></span>
     </footer>
 
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- Bootstrap and necessary plugins -->
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{asset('js/popper.min.js')}}"></script>
@@ -105,8 +116,13 @@
     <!-- GenesisUI main scripts -->
     <script src="{{asset('js/template.js')}}"></script>
     <!-- Libreria SweetAlert -->
-    <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
-
+    <!-- <script src="{{asset('js/sweetalert2.all.min.js')}}"></script> -->
+    <!-- PNotify -->
+    <script src="{{asset('/node_modules/pnotify/dist/es/PNotify.js')}}"></script>
+    <script src="{{asset('/node_modules/pnotify/dist/es/PNotifyButtons.js')}}"></script>
+    <script src="{{asset('/node_modules/pnotify/dist/iife/PNotify.js')}}"></script>
+    <script src="{{asset('/node_modules/pnotify/dist/iife/PNotifyButtons.js')}}"></script> 
+       
     <!-- Contenido JS Personales -->
     @yield('js')
 

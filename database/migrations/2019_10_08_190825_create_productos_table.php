@@ -20,7 +20,7 @@ class CreateProductosTable extends Migration
             $table->string('nombre',150)->unique();
             $table->decimal('precio_venta',11,2);
             $table->decimal('precio_costo',11,2);
-            $table->integer('stock');
+            $table->integer('stock')->unsigned();
             // $table->string('stock_almacen',20);
             $table->integer('alarma_stock')->nullable();
             $table->integer('oferta')->nullable();

@@ -13,7 +13,7 @@
                 
                 {{csrf_field()}}
                     
-                @include('proveedor.form')
+                @include('proveedor.recursos.form')
 
                 </form>
             </div>         
@@ -45,7 +45,7 @@
                 
 
 
-                @include('proveedor.form')
+                @include('proveedor.recursos.form')
 
                 </form>
             </div>         

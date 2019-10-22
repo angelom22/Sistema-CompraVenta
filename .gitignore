@@ -1,7 +1,7 @@
 /plantilla_coreui
-/node_modules
 /public/hot
 /public/storage
+##/public/vendors
 /storage/*.key
 /vendor
 .env
@@ -11,6 +11,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+/node_modules
 
 
 
@@ -127,3 +128,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/osx,laravel,windows,sublimetext,visualstudiocode
+node_modules

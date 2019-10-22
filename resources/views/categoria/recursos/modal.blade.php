@@ -13,7 +13,7 @@
                     
                     {{csrf_field()}}
                        
-                    @include('categoria.form')
+                    @include('categoria.recursos.form')
 
                     </form>
                 </div>         
@@ -42,7 +42,7 @@
 
                     <input type="hidden" id="id_categoria" name="id_categoria" value="">
 
-                    @include('categoria.form')
+                    @include('categoria.recursos.form')
 
                     </form>
                 </div>         

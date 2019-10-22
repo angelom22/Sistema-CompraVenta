@@ -91,7 +91,7 @@
 </main>
         <!-- /Fin del contenido principal -->
 
-@include('proveedor.modal')
+@include('proveedor.recursos.modal')
 
 
 @endsection

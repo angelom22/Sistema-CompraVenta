@@ -53,15 +53,34 @@ class LoginController extends Controller
 
     // METODO PARA LOGUEARSE Y VALIDACION DE LAS CREDENCIALES
     public function login(Request $request){
+        
+        // $this->validateLogin($request);
 
-        $this->validateLogin($request);
+        // if (Auth::attempt(['usuario' => $request->usuario, 'password' => $request->password, 'condicion' => 1])){
+        //     return redirect('/home');
+        // }
 
-        if (Auth::attempt(['usuario' => $request->usuario, 'password' => $request->password, 'condicion' => 1])){
-            return redirect('/home');
+        // return back()->withErrors(['usuario' => trans('auth.failed')])
+        //         ->withInput(request(['usuario']));
+
+        $credentials = [
+            'usuario' => $request->usuario,
+            'password' => $request->password,
+            'condicion' => 1
+        ];
+        
+        if (Auth::attempt($credentials)) {
+            $usuario = $request->usuario;
+            $route = '/home';
+            // dd($usuario);
+            // return $usuario;
+            return response()->json($route);
+        } else {
+            $errors = 'Usuario o contraseña invalida';
+            $code   = 422;
+            return response()->json($errors, $code);
         }
 
-        return back()->withErrors(['usuario' => trans('auth.failed')])
-                ->withInput(request(['usuario']));
     }
 
     //  METODO PARA CERRAR SESION DEL USUARIO

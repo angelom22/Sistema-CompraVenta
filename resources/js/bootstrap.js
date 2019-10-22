@@ -9,7 +9,9 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-
+    window.swal = require('sweetalert2');
+    // window.PNotify = require('pnotify');
+    
     require('bootstrap');
 } catch (e) {}
 

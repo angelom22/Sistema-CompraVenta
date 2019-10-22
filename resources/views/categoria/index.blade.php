@@ -112,7 +112,7 @@
         <!-- Fin ejemplo de tabla Listado -->
     </div>
     
-    @include('categoria.modal')
+    @include('categoria.recursos.modal')
     
 </main>
         <!-- /Fin del contenido principal -->
