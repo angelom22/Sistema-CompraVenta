@@ -41,8 +41,8 @@
                             <th>Categoría</th>
                             <th>Producto</th>
                             <th>Código</th>
-                            <th>Precio Venta</th>
                             <th>Precio Costo</th>
+                            <th>Precio Venta</th>
                             <th>Stock</th>
                             <th>Medición</th>
                             <th>Estado</th>
@@ -63,8 +63,8 @@
                             <td>{{$producto->categoria}}</td>
                             <td>{{$producto->nombre}}</td>
                             <td>{{$producto->codigo}}</td>
-                            <td>{{$producto->precio_venta}}</td>
-                            <td>{{$producto->precio_costo}}</td>
+                            <td>{{number_format($producto->precio_costo,2,",",".")}}</td>
+                            <td>{{number_format($producto->precio_venta, 2, ",", ".")}}</td>
                             <td>{{$producto->stock}}</td>
                             <td>{{$producto->medida}}-{{$producto->letra}}</td>
 

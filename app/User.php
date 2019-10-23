@@ -19,7 +19,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id', 'nombre', 'tipo_documento', 'num_documento', 'direccion', 'telefono', 'email', 'usuario', 'password', 'condicion', 'idrol', 'imagen'
+        'id',
+        'nombre', 
+        'tipo_documento', 
+        'num_documento', 
+        'direccion', 
+        'telefono', 
+        'email', 
+        'usuario', 
+        'password', 
+        'condicion', 
+        'idrol', 
+        'imagen'
     ];
 
     /**
@@ -40,11 +51,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // public function Rol(){
+    //     return $this->belongsTo(Rol::class,'idrol','id');
+    // }
+
     public function Rol(){
-        return $this->belongsTo(Rol::class,'idrol','id');
-    }
+        return $this->belongsTo(Rol::class, 'idrol', 'id');
+    } 
 
     public function TipoDocumento(){
         return $this->hasOne(TipoDocumento::class, 'id', 'tipo_documento');
     }
+
+    public function hasRoles(array $roles)
+    {
+        foreach ($roles as $role) {
+            $role = (int)$role;
+            if ($this->id_rol === $role){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

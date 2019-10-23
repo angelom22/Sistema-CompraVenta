@@ -82,17 +82,17 @@
 
                                 <tr>
                                     <th  colspan="3"><p align="right">TOTAL:</p></th>
-                                    <th><p align="right">Bs{{number_format($compra->total,2)}}</p></th>
+                                    <th><p align="right">Bs{{number_format($compra->total,2,",",".")}}</p></th>
                                 </tr>
 
                                 <tr>
                                     <th colspan="3"><p align="right">TOTAL IMPUESTO (16%):</p></th>
-                                    <th><p align="right">Bs{{number_format($compra->total*16/100,2)}}</p></th>
+                                    <th><p align="right">Bs{{number_format($compra->total*16/100,2,",",".")}}</p></th>
                                 </tr>
 
                                 <tr>
                                     <th  colspan="3"><p align="right">TOTAL PAGAR:</p></th>
-                                    <th><p align="right">Bs{{number_format($compra->total+($compra->total*16/100),2)}}</p></th>
+                                    <th><p align="right">Bs{{number_format($compra->total+($compra->total*16/100),2,",",".")}}</p></th>
                                 </tr> 
 
                                 <tr class="bg-success">
@@ -113,7 +113,7 @@
                                     <td>{{$detalle->producto}}</td>
                                     <td>Bs{{$detalle->precio}}</td>
                                     <td>{{$detalle->cantidad}}</td>
-                                    <td>Bs{{number_format($detalle->cantidad*$detalle->precio,2)}}</td>
+                                    <td>Bs{{number_format($detalle->cantidad*$detalle->precio,2,",",".")}}</td>
 
                                 </tr> 
                             @endforeach

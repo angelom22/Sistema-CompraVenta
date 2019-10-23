@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'Comprador' => \App\Http\Middleware\Comprador::class,
         'Socio' => \App\Http\Middleware\Comprador::class,
         'Gerente' => \App\Http\Middleware\Comprador::class,
+        
     ];
 
     /**

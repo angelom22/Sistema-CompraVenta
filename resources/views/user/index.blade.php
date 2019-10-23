@@ -1,8 +1,8 @@
 @extends('principal')
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="{{asset('css/datatables.min.css')}}"/>
-<!-- <link rel="stylesheet" type="text/css" href="{{asset('datatables/Bootstrap-4-4.1.1/css/bootstrap.min.css')}}"/> -->
+
+    <link rel="stylesheet" type="text/css" href="{{asset('css/datatables.min.css')}}"/>
  
 @endsection
 

@@ -1,7 +1,8 @@
 @extends('principal')
 
 @section('css')
-<link rel="stylesheet" type="text/css" href="{{asset('css/datatables.min.css')}}"/>
+
+    <link rel="stylesheet" type="text/css" href="{{asset('css/datatables.min.css')}}"/>
  
 @endsection
 
@@ -11,7 +12,7 @@
 <main class="main">
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
     </ol>
     <div class="container-fluid">
         <!-- Graficas -->
@@ -111,60 +112,7 @@
 @endsection
 
 @section('js')
+
 <script src="{{asset('js/Chart.min.js')}}"></script>
-
-<script>
-$(function () {
-    /* ChartJS
-    * -------
-    * Here we will create a few charts using ChartJS
-    */
-
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    /**inicio de compras mes */
-    
-    var varCompra=document.getElementById('compras').getContext('2d');
-
-        var charCompra = new Chart(varCompra, {
-            type: 'line',
-            data: {
-                labels: [<?php foreach ($comprasmes as $reg)
-                    { 
-                
-                setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish'); 
-                $mes_traducido=strftime('%B',strtotime($reg->mes));
-        
-                echo '"'. $mes_traducido.'",';} ?>],
-                datasets: [{
-                    label: 'Compras',
-                    data: [<?php foreach ($comprasmes as $reg)
-                        {echo ''. $reg->totalmes.',';} ?>],
-                
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth:3
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                }
-            }
-        });
-
-        /*fin compras mes* */
-
-
-    
-
-   
-
-</script>
 
 @endsection

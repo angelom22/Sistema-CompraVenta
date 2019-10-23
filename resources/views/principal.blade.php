@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Sistema Compras-Ventas con Laravel y Vue Js- webtraining-it.com">
     <meta name="keyword" content="Sistema Compras-Ventas con Laravel y Vue Js">
-    <title>Proyecto Compra-Venta</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="image/png" href="{{asset('img/favicon.png')}}">
@@ -16,60 +16,22 @@
     <link href="{{asset('css/flag-icon.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/simple-line-icons.min.css')}}" rel="stylesheet">
+    <link href="{{asset('fonts/icomoon.css')}}" rel="stylesheet">
     <!-- Main styles for this application -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <link href="{{asset('css/pace.min.css')}}" rel="stylesheet">
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="{{asset('css/datatables.min.css')}}"/>
     <!-- PNotify -->
-    <link href="{{asset('node_modules/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css"> 
-    
-    <link href="{{ asset('css/pnotify.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('css/pnotify.buttons.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('css/pnotify.nonblock.css') }}" rel="stylesheet"/>
+    <link href="{{asset('vendors/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css" />
        
     <!-- Contenido Styles Personales -->
     @yield('css')
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-<header class="app-header navbar">
-        <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <!--PONER LOGO-->
-        <!--<a class="navbar-brand" href="#"></a>-->
-        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <ul class="nav navbar-nav d-md-down-none">
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Dashbord</a>
-            </li>
-           
-        </ul>
-        <ul class="nav navbar-nav ml-auto">
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{asset('storage/img/usuario/'.Auth::user()->imagen)}}" class="img-avatar" alt="{{Auth::user()->nombre}}">
-                    <span class="d-md-down-none">{{Auth::user()->usuario}} </span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header text-center">
-                        <strong>Cuenta</strong>
-                    </div>
-                    <a class="dropdown-item" href="{{ route('logout') }}" 
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="fa fa-lock"></i> Cerrar sesión</a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                      {{ csrf_field()}}
-                    </form>
-                </div>
-            </li>
-        </ul>
-    </header>
+    @include('layouts.header')
 
     <div class="app-body">
     <!-- Codigo para mostrar el sidebar dependiendo del rol de usuario -->
@@ -96,11 +58,7 @@
         <!-- /Fin del contenido principal -->
     </div>   
 
-    <footer class="app-footer">
-        <!-- <span><a href="http://www.webtraining-it.com/">Politicas de Privacidad</a> &copy; 2019</span> -->
-        <span><a href="#" target="_blank">Politicas de Privacidad</a> &copy; 2019</span>
-        <span class="ml-auto">Desarrollado por <a href="https://www.linkedin.com/in/angelo-meneses-9076a6159/" target="_blank">Ing. Angelo Meneses</a></span>
-    </footer>
+    @include('layouts.footer')
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
@@ -115,14 +73,10 @@
     <script src="{{asset('js/Chart.min.js')}}"></script>
     <!-- GenesisUI main scripts -->
     <script src="{{asset('js/template.js')}}"></script>
-    <!-- Libreria SweetAlert -->
-    <!-- <script src="{{asset('js/sweetalert2.all.min.js')}}"></script> -->
     <!-- PNotify -->
-    <script src="{{asset('/node_modules/pnotify/dist/es/PNotify.js')}}"></script>
-    <script src="{{asset('/node_modules/pnotify/dist/es/PNotifyButtons.js')}}"></script>
-    <script src="{{asset('/node_modules/pnotify/dist/iife/PNotify.js')}}"></script>
-    <script src="{{asset('/node_modules/pnotify/dist/iife/PNotifyButtons.js')}}"></script> 
-       
+    <script type="text/javascript" src="{{asset('vendors/pnotify/dist/iife/PNotify.js')}}"></script>
+    <script type="text/javascript" src="{{asset('vendors/pnotify/dist/iife/PNotifyButtons.js')}}"></script>
+
     <!-- Contenido JS Personales -->
     @yield('js')
 
