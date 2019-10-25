@@ -36,14 +36,14 @@
                 </button>
             </div>          
             <div class="modal-body">     
-                <form action="{{route('usuario.update','test')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{route('usuario.update', 'test')}}" method="post" class="form-horizontal" enctype="multipart/form-data">
                 
                 {{method_field('patch')}}
                 {{csrf_field()}}
 
                 <input type="hidden" id="id_usuario" name="id_usuario" value="">
 
-                @include('user.recursos.form')
+                @include('user.recursos.form', ['btnText' => 'Actualizar'])
 
                 </form>
             </div>         
@@ -66,7 +66,7 @@
                     </button>
                 </div>          
                 <div class="modal-body">     
-                    <form action="{{route('usuario.destroy','test')}}" method="post" class="form-horizontal">
+                    <form action="{{route('usuario.destroy', 'test')}}" method="post" class="form-horizontal">
                     
                     {{method_field('delete')}}
                     {{csrf_field()}}

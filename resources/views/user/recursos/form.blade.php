@@ -55,7 +55,8 @@
 <div class="form-group row">
     <label class="col-md-3 form-control-label" for="rol">Rol <span style="color:red;">(*)</span></label>
     <div class="col-md-9">
-    <select class="form-control" name="id_rol" id="id_rol" required>
+    
+    <select class="form-control select2" name="id_roles[]" id="id_roles" multiple required>
             <option value="0" disabled>Seleccione</option>
             @foreach($roles as $rol)
                 <option value="{{$rol->id}}">{{$rol->nombre}}</option>
@@ -79,6 +80,8 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-    <button type="submit" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Guardar</button>
+    <!-- <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-2x"></i> Cerrar</button>
+    <button type="submit" class="btn btn-success"><i class="fa fa-save fa-2x"></i></button> -->
+    <input type="submit" class="btn btn-success" value="{{ $btnText ?? 'Guardar'}}">
+    <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cerrar">
 </div>

@@ -70,6 +70,9 @@ Route::group(['middleware' => ['auth']], function () {
     
 });
 
+Route::get('roles', function(){
+    return \App\Rol::with('users')->get();
+});
 
 
 // Route::get('cliente', function () {

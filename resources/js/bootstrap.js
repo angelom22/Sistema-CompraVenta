@@ -10,7 +10,9 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
     window.swal = require('sweetalert2');
-    // window.PNotify = require('pnotify');
+    window.select2 = require('select2');
+    // window.pnotify = require('pnotify');
+
     
     require('bootstrap');
 } catch (e) {}

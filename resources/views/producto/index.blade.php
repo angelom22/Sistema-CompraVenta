@@ -36,7 +36,6 @@
                 <table id="table_id" class="table table-bordered table-striped table-sm" style="width:100%">
                     <thead>
                         <tr class="bg-primary">
-                            
                             <th>Imagen</th>
                             <th>Categoría</th>
                             <th>Producto</th>
@@ -46,8 +45,6 @@
                             <th>Stock</th>
                             <th>Medición</th>
                             <th>Estado</th>
-                            <!-- <th>Editar</th>
-                            <th>Cambiar Estado</th> -->
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -113,8 +110,18 @@
                         @endforeach
                     </tbody>
                     <tfoot>
-                        
-                        
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Categoría</th>
+                            <th>Producto</th>
+                            <th>Código</th>
+                            <th>Precio Costo</th>
+                            <th>Precio Venta</th>
+                            <th>Stock</th>
+                            <th>Medición</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>    
                     </tfoot>
                 </table>
 

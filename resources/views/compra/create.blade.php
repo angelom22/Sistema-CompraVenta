@@ -77,24 +77,24 @@
 
                             <br/><br/>
 
+                            <h4 class="text-left">Detalles Compra</h4>
                             <div class="form-group row border">
 
-                                <div class="col-md-8">  
+                                <div class="col-md-6">  
 
-                                        <label class="form-control-label" for="id_producto">Producto <span style="color:red;">(*)</span></label>
+                                    <label class="form-control-label" for="id_producto">Producto <span style="color:red;">(*)</span></label>
 
-                                            <select class="form-control selectpicker" name="id_producto" id="id_producto" data-live-search="true">
-                                                                            
-                                            <option value="0" disabled>Seleccione</option>
+                                    <select class="form-control selectpicker" name="id_producto" id="id_producto" data-live-search="true">
+                                                                    
+                                    <option value="0" disabled>Seleccione</option>
+                                    
+                                    @foreach($productos as $producto)
+                                    
+                                    <option value="{{$producto->id}}">{{$producto->producto}}</option>
                                             
-                                            @foreach($productos as $producto)
-                                            
-                                            <option value="{{$producto->id}}">{{$producto->producto}}</option>
-                                                    
-                                            @endforeach
+                                    @endforeach
 
-                                            </select>
-
+                                    </select>
                                 </div>
                                 <br/>
                             </div>

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class ClienteController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
     /**
      * Display a listing of the resource.
      *

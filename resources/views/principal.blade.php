@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="utf-8">
@@ -24,6 +25,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/datatables.min.css')}}"/>
     <!-- PNotify -->
     <link href="{{asset('vendors/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css" />
+    <!-- Select2 -->
+    <link href="{{asset('vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet" />     
        
     <!-- Contenido Styles Personales -->
     @yield('css')
@@ -35,7 +38,7 @@
 
     <div class="app-body">
     <!-- Codigo para mostrar el sidebar dependiendo del rol de usuario -->
-       @if(Auth::check())
+       <!-- @if(Auth::check())
             @if (Auth::user()->idrol == 1)
                 @include('plantilla.sidebaradministrador')
             @elseif (Auth::user()->idrol == 2)
@@ -49,7 +52,8 @@
             @else
 
             @endif
-       @endif
+       @endif -->
+       @include('layouts.menu-siderbar')
 
         <!-- Contenido Principal -->   
               
@@ -77,6 +81,8 @@
     <script type="text/javascript" src="{{asset('vendors/pnotify/dist/iife/PNotify.js')}}"></script>
     <script type="text/javascript" src="{{asset('vendors/pnotify/dist/iife/PNotifyButtons.js')}}"></script>
 
+    <script src="{{asset('vendors/select2/dist/js/select2.full.min.js')}}"></script>
+    
     <!-- Contenido JS Personales -->
     @yield('js')
 

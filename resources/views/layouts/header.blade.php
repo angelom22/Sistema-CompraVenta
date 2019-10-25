@@ -44,30 +44,26 @@
                 <div class="dropdown-header text-center">
                     <strong>Cuenta</strong>
                 </div>
-                <a href="#" class="dropdown-item">
-                    <i class="icon-head"></i> Edit Profile
+                <a href="{{ url('usuario/'.auth()->id()) }}" class="dropdown-item"> 
+                    <i class="icon-head"></i> Mi Perfil
                 </a>
                 <a href="#" class="dropdown-item">
-                    <i class="icon-mail6"></i> My Inbox
+                    <i class="icon-mail6"></i> Mi Correo
                 </a>
                 <a href="#" class="dropdown-item">
-                    <i class="icon-clipboard2"></i> Task
+                    <i class="icon-clipboard2"></i> Tareas
                 </a>
                 <a href="#" class="dropdown-item">
-                    <i class="icon-calendar5"></i> Calender
+                    <i class="icon-calendar5"></i> Calendario
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}" 
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa fa-power-off"></i> Cerrar sesión</a>
-                <!-- <a href="#" class="dropdown-item"><i class="icon-power3"></i> Logout</a> -->
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field()}}
                 </form>
             </div>
-            <!-- <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item"><i class="icon-power3"></i> Logout</a>
-                    </div> -->
         </li>
     </ul>
 </header>

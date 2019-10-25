@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('usuario')->unique();
             $table->string('password');
             $table->boolean('condicion')->default(1);
-            $table->integer('idrol')->unsigned();
+            // $table->integer('idrol')->unsigned();
             $table->string('imagen',300)->nullable();
             $table->rememberToken();
             $table->timestamps();

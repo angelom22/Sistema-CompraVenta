@@ -23,6 +23,6 @@ class TrUserRol extends Model
     }
 
     public function Rol(){
-        return $this->hasOne(UserRoles::class, 'rol_id', 'id');
+        return $this->hasOne(Rol::class, 'rol_id', 'id');
     }
 }

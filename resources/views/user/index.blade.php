@@ -28,22 +28,23 @@
             <div class="card-body">
                 <div class="form-group row">
                     <div class="col-md-6">
-                       
+                    @if(session()->has('info'))
+                        <div class="alert alert-success">{{session('info')}}</div>          
+                    @endif   
                     </div>
                 </div>
-                
                 <table id="table_id" class="table table-bordered table-striped table-sm" style="width:100%">
                     <thead>
                         <tr class="bg-primary">
-                            <th class="text-center"><i class="icon-people"></i></th>
+                            <th class="text-center"><i class="fa fa-users" aria-hidden="true"></i></th>
                             <th>Nombre</th>
                             <th>Tipo</th>
                             <th>Num</th>
-                            <th>Direccion</th>
-                            <th>Telefono</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
                             <th>Correo</th>
                             <th>Usuario</th>
-                            <th>Rol</th>
+                            <th>Roles</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -61,7 +62,13 @@
                             <td>{{$user->telefono}}</td>
                             <td>{{$user->email}}</td>
                             <td>{{$user->usuario}}</td>
-                            <td>{{$user->Rol->nombre}}</td>
+                            <td>    
+                            <strong>{{ $user->roles()->pluck('nombre')->implode(', ') }}</strong>    
+                                <!-- @foreach($user->roles as $rol)
+                                   <strong>{{$rol->nombre}}</strong>,
+                                @endforeach -->
+                            </td>
+
 
                             <td class="text-center"> 
                                 @if($user->condicion == "1")
@@ -76,32 +83,24 @@
                             </td>
 
                             <td class="text-center">
-                                <a class="btn btn-info" title="Ver y Editar Usuario" data-id_usuario="{{$user->id}}" data-nombre="{{$user->nombre}}" data-tipo_documento="{{$user->TipoDocumento->id}}" data-num_documento="{{$user->num_documento}}" data-direccion="{{$user->direccion}}" data-telefono="{{$user->telefono}}" data-email="{{$user->email}}" data-usuario="{{$user->usuario}}" data-id_rol="{{$user->idrol}}" data-imagen="{{$user->imagen}}" data-toggle="modal" data-target="#abrirmodalEditar">
+                                <a class="btn btn-info" title="Ver y Editar Usuario" data-id_usuario="{{$user->id}}" data-nombre="{{$user->nombre}}" data-tipo_documento="{{$user->TipoDocumento->id}}" data-num_documento="{{$user->num_documento}}" data-direccion="{{$user->direccion}}" data-telefono="{{$user->telefono}}" data-email="{{$user->email}}" data-usuario="{{$user->usuario}}" data-id_rol[]="{{$rol->id}}" data-imagen="{{$user->imagen}}" data-toggle="modal" data-target="#abrirmodalEditar">
                                     <i class="fa fa-eye"></i>
-                                </a>
-                                
-                                <!-- <a class="btn btn-warning" title="Cambiar Estado" >
-                                    <i class="fa fa-wp"></i>
-                                </a>  -->
-                                <!-- <a class="btn btn-danger" data-toggle="modal" data-target="" title="Status">
-                                    <i class="fa fa-times"></i>
-                                </a> -->
-                                
+                                </a>                                
                             </td>
                         </tr>
                     @endforeach
                     </tbody>                    
                     <tfoot>
                         <tr>
-                            <th class="text-center"><i class="icon-people"></i></th>
+                            <th class="text-center"><i class="fa fa-users" aria-hidden="true"></i></th>
                             <th>Nombre</th>
                             <th>Tipo</th>
                             <th>Num</th>
-                            <th>Direccion</th>
-                            <th>Telefono</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
                             <th>Correo</th>
                             <th>Usuario</th>
-                            <th>Rol</th>
+                            <th>Roles</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -125,17 +124,24 @@
 @endsection
 
 @section('js')
+
 <script type="text/javascript" src="{{asset('js/jquery-3.3.1.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/datatables.min.js')}}"></script>
 
-<!-- <script type="text/javascript" src="{{asset('datatables/Bootstrap-4-4.1.1/js/bootstrap.min.js')}}"></script> -->
 <script>
 
 $(document).ready( function () {
-    
+   
     $('#table_id').DataTable({
-        // dom: 'Bfrtip',
+        dom: 'Bfrtip',
+        lengthMenu: [
+        [5, 15, 20, -1],
+        ['5 Filas', '15 Filas', '20 Filas', 'Todas']
+        ],
+        buttons: [
+            'pageLength',
+        ],
         // buttons: [
         //     'copy', 'excel', 'pdf'
         // ],
@@ -198,6 +204,9 @@ $(document).ready( function () {
         var email_modal_editar = button.data('email');
         // este id_rol_modal_editar selecciona la categoria
         var id_rol_modal_editar = button.data('id_rol');
+        $.isEmptyObject(id_rol_modal_editar);
+        console.log(id_rol_modal_editar); 
+        // var roles           = $("#id_roles").val();
         var usuario_modal_editar = button.data('usuario');
         // var password_modal_editar = button.data('password');
         var id_usuario = button.data('id_usuario');

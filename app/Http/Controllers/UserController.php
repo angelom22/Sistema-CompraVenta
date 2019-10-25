@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use DB;
 use App\User;
 use App\Rol;
+use App\TrUserRol;
 use App\Model\TipoDocumento;
-use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ActualizarUsuarioRequest;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use DB;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    
+    function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('roles:1', ['except' => ['edit','update','show','destroy']]);
+    }
 
     /**
      * Display a listing of the resource.
@@ -23,12 +32,14 @@ class UserController extends Controller
     {
         $users = User::all();
         // dd($users[0]->Rol->nombre);
+        // dd($users[0]->roles); 
         $tipo_documento = TipoDocumento::all();
         
         /**Listar los roles en la ventana modal */
         $roles = Rol::select('id', 'nombre', 'descripcion')
                     ->where('condicion','1')
                     ->get();
+        
 
         return view('user.index', compact('users','tipo_documento','roles'));
         // return $tipo_documento;
@@ -53,6 +64,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         // if(!$request->ajax()) return redirect('/');
+        // dd($request->id_roles);
         $user = new User();
         $user->nombre = $request->nombre;
         $user->tipo_documento = $request->tipo_documento;
@@ -63,7 +75,7 @@ class UserController extends Controller
         $user->usuario = $request->usuario;
         $user->password = bcrypt($request->password);
         $user->condicion = '1';
-        $user->idrol = $request->id_rol;
+        // $user->idrol = $request->id_rol;
 
         /**INICIO REGISTAR IMAGEN DEL USUARIO */
         // Handle File Upload
@@ -92,7 +104,17 @@ class UserController extends Controller
 
         $user->save();
 
-        return Redirect::to("usuario");
+        // codigo para guardar los roles cuando sean un arreglo
+        foreach ($request->id_roles as $key ) {
+            $TrUserRol = TrUserRol::create([
+                'user_id' => $user->id,
+                'rol_id' => $key
+            ]);
+        }
+
+        
+
+        return Redirect::to("usuario")->with('info', 'Usuario Creado Correctamente');
     }
 
     /**
@@ -103,7 +125,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('user.show', compact('user'));
     }
 
     /**
@@ -114,7 +138,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $this->authorize($user);
+
+        return view('user.edit', compact('user'));
+
     }
 
     /**
@@ -125,9 +154,11 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
-    {   
-        // dd($request->id_usuario);
+    {  
+        // dd($id);
+        // $user = User::where('id', $id)->first()
         $user = User::findOrFail($request->id_usuario);
+        $this->authorize($user);
         $user->nombre = $request->nombre;
         $user->tipo_documento = $request->tipo_documento;
         $user->num_documento = $request->num_documento;
@@ -137,7 +168,7 @@ class UserController extends Controller
         $user->usuario = $request->usuario; 
         $user->password = bcrypt($request->password);
         $user->condicion = '1';
-        $user->idrol = $request->id_rol;
+        // $user->idrol = $request->id_rol;
 
         /**CODIGO PARA EDITAR EL AVATAR DEL USUARIO */
         // Handle File Upload
@@ -174,7 +205,24 @@ class UserController extends Controller
 
         $user->save();
 
-        return Redirect::to("usuario");
+        // Actualizar roles del usuario
+        // $TrUserRol = TrUserRol::where('user_id', $user->id )
+        //                         ->update([
+        //                             'rol_id' => $request->id_roles
+        //                         ]);
+
+        //Eliminar roles del Usuario Actual
+        TrUserRol::where('user_id', $request->id_usuario)->delete();
+        
+        //Guardar los nuevos roles del usuario
+        foreach ($request->id_roles as $key ) {
+            $TrUserRol = TrUserRol::create([
+                'user_id' => $user->id,
+                'rol_id' => $key
+            ]);
+        }        
+
+        return Redirect::to("usuario")->with('info', 'Usuario Actualizado Correctamente');
     }
 
     /**
@@ -186,18 +234,20 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         $user = User::findOrfail($request->id_usuario);
-         
-         if($user->condicion == "1") {
+        
+        // $this->authorize($user); //Codigo para autorizar al usuario hacer el cambio del estado
+
+        if($user->condicion == "1") {
 
              $user->condicion = '0';
              $user->save();
-             return Redirect::to("usuario");
+             return Redirect::to("usuario")->with('info', 'Usuario cambiado de estado de forma correcta');
 
-         }else {
+        }else {
 
             $user->condicion = '1';
             $user->save();
-            return Redirect::to("usuario");
-         }
+            return Redirect::to("usuario")->with('info', 'Usuario cambiado de estado de forma correcta');
+        }
     }
 }

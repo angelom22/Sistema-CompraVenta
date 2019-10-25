@@ -3,8 +3,10 @@
 namespace App;
 
 use App\Rol;
+use App\TrUserRol;
 use App\Model\TipoDocumento;
 
+use Illuminate\Support\Collection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,8 +30,7 @@ class User extends Authenticatable
         'email', 
         'usuario', 
         'password', 
-        'condicion', 
-        'idrol', 
+        'condicion',  
         'imagen'
     ];
 
@@ -51,28 +52,43 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // public function Rol(){
-    //     return $this->belongsTo(Rol::class,'idrol','id');
-    // }
-
-    public function Rol(){
-        return $this->belongsTo(Rol::class, 'idrol', 'id');
-    } 
-
     public function TipoDocumento(){
         return $this->hasOne(TipoDocumento::class, 'id', 'tipo_documento');
     }
 
+    public function roles(){
+        return $this->belongsToMany(Rol::class, 'tr_user_rol');
+    }
+
+    // public function TrUserRol(){
+        
+    //     return $this->hasMany(TrUserRol::class, 'id_user', 'id');
+    // }
+
+
     public function hasRoles(array $roles)
     {
         foreach ($roles as $role) {
+            // dd($role);
             $role = (int)$role;
-            if ($this->id_rol === $role){
-                return true;
-            }
+
+            foreach($this->roles as $roles)
+            {    
+                if ($roles->id === $role)
+                {
+                    return true;
+                }
+            }            
+            
         }
 
         return false;
     }
+
+    public function isAdmin()
+    {
+       return $this->hasRoles(['1']);
+    }
+
 
 }
