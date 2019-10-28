@@ -78,7 +78,7 @@
                             <br/><br/>
 
                             <h4 class="text-left">Detalles Compra</h4>
-                            <div class="form-group row border">
+                            <div class="form-group row ">
 
                                 <div class="col-md-6">  
 
@@ -86,13 +86,13 @@
 
                                     <select class="form-control selectpicker" name="id_producto" id="id_producto" data-live-search="true">
                                                                     
-                                    <option value="0" disabled>Seleccione</option>
-                                    
-                                    @foreach($productos as $producto)
-                                    
-                                    <option value="{{$producto->id}}">{{$producto->producto}}</option>
-                                            
-                                    @endforeach
+                                        <option value="0" disabled>Seleccione</option>
+                                        
+                                        @foreach($productos as $producto)
+                                        
+                                        <option value="{{$producto->id}}">{{$producto->producto}}</option>
+                                                
+                                        @endforeach
 
                                     </select>
                                 </div>
@@ -102,15 +102,25 @@
                             <div class="form-group row">
 
                                 <div class="col-md-3">
-                                        <label class="form-control-label" for="cantidad">Cantidad <span style="color:red;">(*)</span></label>
-                                        
-                                        <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Ingrese cantidad" pattern="[0-9]{0,15}">
+                                    <label class="form-control-label" for="cantidad">Cantidad <span style="color:red;">(*)</span></label>
+                                    
+                                    <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Ingrese cantidad" pattern="[0-9]{0,15}">
                                 </div>
 
                                 <div class="col-md-3">
-                                        <label class="form-control-label" for="precio_compra">Precio Compra <span style="color:red;">(*)</span></label>
-                                        
-                                        <input type="number" id="precio_compra" name="precio_compra" class="form-control" placeholder="Ingrese precio de compra" pattern="[0-9]{0,15}">
+                                    <label class="form-control-label" for="precio_compra">Precio Compra <span style="color:red;">(*)</span></label>
+                                    
+                                    <input type="number" id="precio_compra" name="precio_compra" class="form-control" placeholder="Ingrese precio de compra" pattern="[0-9]{0,15}">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="form-control-label" for="impuesto">Impuesto <span style="color:red;">(*)</span></label>
+                                    <select class="form-control selectpicker" name="impuesto" id="impuesto" data-live-search="true">
+                                        <option value="0" disabled>Seleccione</option>
+                                        @foreach($impuesto as $iva)
+                                        <option value="{{$iva->id}}">{{$iva->nombre}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                             
@@ -148,7 +158,7 @@
                                         </tr>
 
                                         <tr>
-                                            <th colspan="4"><p align="right">TOTAL IMPUESTO (16%):</p></th>
+                                            <th colspan="4"><p align="right">TOTAL IMPUESTO ({{$iva->nombre}}):</p></th>
                                             <th><p align="right"><span id="total_impuesto"> 0.00</span></p></th>
                                         </tr>
 
@@ -222,38 +232,44 @@
 
     function agregar(){
 
-            id_producto = $("#id_producto").val();
-            producto = $("#id_producto option:selected").text();
-            cantidad = $("#cantidad").val();
-            precio_compra = $("#precio_compra").val();
+        id_producto = $("#id_producto").val();
+        producto = $("#id_producto option:selected").text();
+        cantidad = $("#cantidad").val();
+        precio_compra = $("#precio_compra").val();
+        id_impuesto = $("#impuesto").val();
+        if(id_impuesto == 1){
+            impuesto = 12;
+        }else if(id_impuesto == 2){
             impuesto = 16;
-        
-            
-            if(id_producto != "" && cantidad != "" && cantidad > 0 && precio_compra != ""){
-            
-            subtotal[cont] = cantidad*precio_compra;
-            total = total+subtotal[cont];
-            
-            var fila ='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-times fa-2x"></i></button></td> <td><input type="hidden" name="id_producto[]" value="'+id_producto+'">'+producto+'</td> <td><input type="number" id="precio_compra[]" name="precio_compra[]"  value="'+precio_compra+'"> </td>  <td><input type="number" name="cantidad[]" value="'+cantidad+'"> </td> <td>Bs'+subtotal[cont]+' </td></tr>';
-            cont++;
-            limpiar();
-            totales();
-            
-            evaluar();
-            $('#detalles').append(fila);
-            
-            }else{
+        }
 
-                // alert("Rellene todos los campos del detalle de la compra, revise los datos del producto");
-                
-                swal.fire({
-                type: 'error',
-                //title: 'Oops...',
-                text: 'Rellene todos los campos del detalle de la compra',
-                
-                })
+        // alert(impuesto);
+        
+        if(id_producto != "" && cantidad != "" && cantidad > 0 && precio_compra != ""){
+        
+        subtotal[cont] = cantidad*precio_compra;
+        total = total+subtotal[cont];
+        
+        var fila ='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-times fa-2x"></i></button></td> <td><input type="hidden" name="id_producto[]" value="'+id_producto+'">'+producto+'</td> <td><input type="number" id="precio_compra[]" name="precio_compra[]"  value="'+precio_compra+'"> </td>  <td><input type="number" name="cantidad[]" value="'+cantidad+'"> </td> <td>Bs'+subtotal[cont]+' </td></tr>';
+        cont++;
+        limpiar();
+        totales();
+        
+        evaluar();
+        $('#detalles').append(fila);
+        
+        }else{
+
+            // alert("Rellene todos los campos del detalle de la compra, revise los datos del producto");
             
-            }
+            swal.fire({
+            type: 'error',
+            //title: 'Oops...',
+            text: 'Rellene todos los campos del detalle de la compra',
+            
+            })
+        
+        }
         
     }
 
@@ -268,7 +284,7 @@
 
     function totales(){
 
-        $("#total").html("Bs " + total.toFixed(2));
+        $("#total").html("Bs " + total.toFixed(2),",",".");
 
         total_impuesto = total*impuesto/100;
         total_pagar = total+total_impuesto;
@@ -293,9 +309,14 @@
     }
 
     function eliminar(index){
-
+        id_impuesto = $("#impuesto").val();
+            if(id_impuesto === 1){
+                impuesto = 12;
+            }else if(id_impuesto === 2){
+                impuesto = 16;
+            }
         total = total-subtotal[index];
-        total_impuesto = total*16/100;
+        total_impuesto = total*impuesto/100;
         total_pagar_html = total + total_impuesto;
         
         $("#total").html("Bs" + total);

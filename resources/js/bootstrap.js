@@ -11,7 +11,7 @@ try {
     window.$ = window.jQuery = require('jquery');
     window.swal = require('sweetalert2');
     window.select2 = require('select2');
-    // window.pnotify = require('pnotify');
+    // window.PNotify = require('pnotify');
 
     
     require('bootstrap');

@@ -14,6 +14,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
     </ol>
+    
     <div class="container-fluid">
         <!-- Graficas -->
         @foreach($totales as $total)
@@ -114,5 +115,6 @@
 @section('js')
 
 <script src="{{asset('js/Chart.min.js')}}"></script>
+
 
 @endsection

@@ -169,8 +169,8 @@
                     @foreach($detalles as $detalle)
                     <tr class="text-center">
                         <td>{{$detalle->cantidad}}</td>
-                        <td>{{$detalle->producto}}</td>
-                        <td>{{$detalle->precio}}</td>
+                        <td >{{$detalle->producto}}</td>
+                        <td >{{$detalle->precio}}</td>
                         <!-- <td>{{$detalle->cantidad*$detalle->precio}}</td> -->
                         <td>{{number_format($detalle->cantidad*$detalle->precio,2, ",", ".")}}</td>
                     </tr>
@@ -180,15 +180,22 @@
                     @foreach($compra as $calculo)
                     <tr>
                         <th colspan="3"><p align="right">TOTAL:</p></th>
-                        <td><p align="right">Bs {{number_format($calculo->total,2, ",", ".")}}</p></td>
+                        <td>
+                            <p align="right">Bs {{number_format($calculo->total,2, ",", ".")}}</p>
+                        </td>
                     </tr>
                     <tr>
-                        <th colspan="3"><p align="right">TOTAL IMPUESTO (16%):</p></th>
-                        <td><p align="right">Bs {{number_format($calculo->total*$calculo->impuesto,2, ",", ".")}}</p></td>
+                        <th colspan="3"><p align="right">TOTAL IMPUESTO ({{$calculo->Impuesto->nombre}}):</p></th>
+                        <td>
+                            <p align="right">Bs {{number_format($calculo->total*$calculo->Impuesto->impuesto/100,2, ",", ".")}}</p>
+                        </td>
                     </tr>
+                    <!-- Falta completar el campo TOTAL a ser mostrado en el PDF -->
                     <tr>
                         <th colspan="3"><p align="right">TOTAL PAGAR:</p></th>
-                        <td><p align="right">Bs {{number_format($calculo->total+($calculo->total*$calculo->impuesto),2, ",", ".")}}</p></td>
+                        <td>
+                            <p align="right">Bs {{number_format($calculo->total+($calculo->total*$calculo->Impuesto->impuesto/100),2, ",", ".")}}</p>
+                        </td>
                     </tr>
                     @endforeach
                 </tfoot>

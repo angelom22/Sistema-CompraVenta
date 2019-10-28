@@ -3,6 +3,8 @@
 @section('css')
 
     <link rel="stylesheet" type="text/css" href="{{asset('css/datatables.min.css')}}"/>
+    <!-- Select2 -->
+    <link href="{{asset('vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet" />   
  
 @endsection
 
@@ -29,7 +31,11 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                     @if(session()->has('info'))
-                        <div class="alert alert-success">{{session('info')}}</div>          
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">{{session('info')}}
+                            <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>          
                     @endif   
                     </div>
                 </div>
@@ -38,8 +44,7 @@
                         <tr class="bg-primary">
                             <th class="text-center"><i class="fa fa-users" aria-hidden="true"></i></th>
                             <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Num</th>
+                            <th>Documento</th>
                             <th>Dirección</th>
                             <th>Teléfono</th>
                             <th>Correo</th>
@@ -56,8 +61,7 @@
                                 <img src="{{asset('storage/img/usuario/'.$user->imagen)}}" id="imagen1" alt="{{$user->nombre}}" class="img-responsive" width="100px" height="100px">
                             </td>
                             <td>{{$user->nombre}}</td>
-                            <td>{{$user->TipoDocumento->letra_documento}}</td>
-                            <td>{{$user->num_documento}}</td>
+                            <td>{{$user->TipoDocumento->letra_documento}}-{{$user->num_documento}}</td>
                             <td>{{$user->direccion}}</td>
                             <td>{{$user->telefono}}</td>
                             <td>{{$user->email}}</td>
@@ -68,7 +72,6 @@
                                    <strong>{{$rol->nombre}}</strong>,
                                 @endforeach -->
                             </td>
-
 
                             <td class="text-center"> 
                                 @if($user->condicion == "1")
@@ -83,7 +86,7 @@
                             </td>
 
                             <td class="text-center">
-                                <a class="btn btn-info" title="Ver y Editar Usuario" data-id_usuario="{{$user->id}}" data-nombre="{{$user->nombre}}" data-tipo_documento="{{$user->TipoDocumento->id}}" data-num_documento="{{$user->num_documento}}" data-direccion="{{$user->direccion}}" data-telefono="{{$user->telefono}}" data-email="{{$user->email}}" data-usuario="{{$user->usuario}}" data-id_rol[]="{{$rol->id}}" data-imagen="{{$user->imagen}}" data-toggle="modal" data-target="#abrirmodalEditar">
+                                <a class="btn btn-info" title="Ver y Editar Usuario" data-id_usuario="{{$user->id}}" data-nombre="{{$user->nombre}}" data-tipo_documento="{{$user->TipoDocumento->id}}" data-num_documento="{{$user->num_documento}}" data-direccion="{{$user->direccion}}" data-telefono="{{$user->telefono}}" data-email="{{$user->email}}" data-usuario="{{$user->usuario}}" data-id_roles[]="{{$user->roles}}" data-imagen="{{$user->imagen}}" data-password="{{$user->password}}" data-toggle="modal" data-target="#abrirmodalEditar">
                                     <i class="fa fa-eye"></i>
                                 </a>                                
                             </td>
@@ -94,8 +97,7 @@
                         <tr>
                             <th class="text-center"><i class="fa fa-users" aria-hidden="true"></i></th>
                             <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Num</th>
+                            <th>Documento</th>
                             <th>Dirección</th>
                             <th>Teléfono</th>
                             <th>Correo</th>
@@ -128,6 +130,12 @@
 <script type="text/javascript" src="{{asset('js/jquery-3.3.1.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/datatables.min.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('vendors/select2/dist/js/select2.min.js')}}"></script>
+
+<script>
+$('.select2').select2();
+</script>
 
 <script>
 
@@ -148,7 +156,7 @@ $(document).ready( function () {
         paging:   true,
         ordering: true,
         info:     true,
-        scrollY: 400,
+        // scrollY: 400,
         // scrollX: true,
         responsive: true,
         // autoFill: true,
@@ -187,6 +195,12 @@ $(document).ready( function () {
 </script>
 
 <script>
+$('.select2').select2();
+</script>
+
+<script>
+    // MULTI-SELECTOR
+    // $('.select2').select2();
 
     /*EDITAR USUARIO EN VENTANA MODAL*/
     $('#abrirmodalEditar').on('show.bs.modal', function(event){
@@ -203,12 +217,11 @@ $(document).ready( function () {
         var telefono_modal_editar = button.data('telefono');
         var email_modal_editar = button.data('email');
         // este id_rol_modal_editar selecciona la categoria
-        var id_rol_modal_editar = button.data('id_rol');
-        $.isEmptyObject(id_rol_modal_editar);
-        console.log(id_rol_modal_editar); 
-        // var roles           = $("#id_roles").val();
+        var id_roles_modal_editar = button.data('id_roles[]');
+        // $.isEmptyObject(id_rol_modal_editar);
+        // console.log(id_roles_modal_editar); 
         var usuario_modal_editar = button.data('usuario');
-        // var password_modal_editar = button.data('password');
+        var password_modal_editar = button.data('password');
         var id_usuario = button.data('id_usuario');
         // console.log(id_usuario);
 
@@ -221,9 +234,9 @@ $(document).ready( function () {
         modal.find('.modal-body #direccion').val(direccion_modal_editar);
         modal.find('.modal-body #telefono').val(telefono_modal_editar);
         modal.find('.modal-body #email').val(email_modal_editar);
-        modal.find('.modal-body #id_rol').val(id_rol_modal_editar);
+        modal.find('.modal-body #id_roles').val(id_roles_modal_editar);
         modal.find('.modal-body #usuario').val(usuario_modal_editar);
-        // modal.find('.modal-body #password').val(password_modal_editar);
+        modal.find('.modal-body #password').val(password_modal_editar);
         modal.find('.modal-body #id_usuario').val(id_usuario);
         
     });

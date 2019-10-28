@@ -86,13 +86,13 @@
                                 </tr>
 
                                 <tr>
-                                    <th colspan="3"><p align="right">TOTAL IMPUESTO (16%):</p></th>
-                                    <th><p align="right">Bs{{number_format($compra->total*16/100,2,",",".")}}</p></th>
+                                    <th colspan="3"><p align="right">TOTAL IMPUESTO ({{$compra->Impuesto->nombre}}):</p></th>
+                                    <th><p align="right">Bs{{number_format($compra->total*$compra->Impuesto->impuesto/100,2,",",".")}}</p></th>
                                 </tr>
 
                                 <tr>
                                     <th  colspan="3"><p align="right">TOTAL PAGAR:</p></th>
-                                    <th><p align="right">Bs{{number_format($compra->total+($compra->total*16/100),2,",",".")}}</p></th>
+                                    <th><p align="right">Bs{{number_format($compra->total+($compra->total*$compra->Impuesto->impuesto/100),2,",",".")}}</p></th>
                                 </tr> 
 
                                 <tr class="bg-success">

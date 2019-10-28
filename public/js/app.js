@@ -58355,7 +58355,7 @@ try {
   window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
   window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
   window.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-  window.select2 = __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js"); // window.pnotify = require('pnotify');
+  window.select2 = __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js"); // window.PNotify = require('pnotify');
 
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 } catch (e) {}

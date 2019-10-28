@@ -63,7 +63,7 @@
                             <td>{{$compra->proveedor}}</td>
                             <td>{{$compra->tipo_identificacion}}</td>
                             <td>{{$compra->nombre}}</td>
-                            <td>{{$compra->impuesto}}</td>
+                            <td>{{$compra->Impuesto->nombre}}</td>
                             <td>Bs {{number_format($compra->total,2,",",".")}}</td>
                             <td>
                                 @if($compra->estado == "Registrado")

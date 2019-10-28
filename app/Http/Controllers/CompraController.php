@@ -9,6 +9,7 @@ use App\Model\Compra;
 use App\Model\DetalleCompra;
 use App\Model\Proveedor;
 use App\Model\Producto;
+use App\Model\Impuesto;
 use Illuminate\Support\Facades\Redirect;
 
 class CompraController extends Controller
@@ -33,13 +34,14 @@ class CompraController extends Controller
             $compras = Compra::join('proveedores', 'compras.idproveedor', '=', 'proveedores.id')
                         ->join('users', 'compras.idusuario', '=', 'users.id')
                         ->join('detalle_factura_compras', 'compras.id', '=', 'detalle_factura_compras.idcompra')
+                        ->join('impuesto', 'compras.impuesto', '=', 'impuesto.id')
                         ->select('compras.id', 'compras.tipo_identificacion', 'compras.num_compra','compras.fecha_compra','compras.impuesto', 'compras.total', 'compras.estado', 'proveedores.nombre_empresa as proveedor', 'detalle_factura_compras.status', 'users.nombre')
                         ->where('compras.num_compra', 'LIKE', '%'.$sql.'%')
                         ->orwhere('compras.estado', 'LIKE', '%'.$sql.'%')
                         ->orderBy('compras.id', 'desc')
                         ->groupBy('compras.id', 'compras.tipo_identificacion', 'compras.num_compra','compras.fecha_compra','compras.impuesto','compras.total', 'compras.estado', 'proveedores.nombre_empresa', 'detalle_factura_compras.status','users.nombre')
                         ->get();
-            // dd($compras[0]->status);
+            // dd($compras[0]->Impuesto->nombre);
             return view('compra.index', compact('compras','sql'));
             // return $compras;
         }
@@ -56,16 +58,19 @@ class CompraController extends Controller
     {
         // METODO PARA CREAR COMPRAS
 
-        // lsitar los proveedores en ventana modal
+        // listar los proveedores en ventana modal
         $proveedores = Proveedor::get();
+
+        // Listar los impuestos en la ventana modal
+        $impuesto = Impuesto::get();
 
         // listar los productos en ventana modal
         $productos = DB::table('productos as prod')
                     ->select(DB::raw('CONCAT(prod.codigo," ",prod.nombre) AS producto'), 'prod.id')
                     ->where('prod.condicion', '=', '1')
                     ->get();
-
-        return view('compra.create',compact('proveedores','productos'));
+        
+        return view('compra.create',compact('proveedores','productos','impuesto'));
     }
 
     /**
@@ -91,7 +96,7 @@ class CompraController extends Controller
             $compra->tipo_identificacion    = $request->tipo_identificacion;
             $compra->num_compra             = $request->num_compra;
             $compra->fecha_compra           = $mytime->toDateString();
-            $compra->impuesto               = '0.16';
+            $compra->impuesto               = $request->impuesto;
             $compra->total                  = $request->total_pagar;
             $compra->estado                 = 'Registrado';
             $compra->save();
@@ -145,12 +150,14 @@ class CompraController extends Controller
         // mostrar compra
         $compra = Compra::join('proveedores', 'compras.idproveedor', '=', 'proveedores.id')
                             ->join('detalle_factura_compras', 'compras.id', '=', 'detalle_factura_compras.idcompra')
+                            ->join('impuesto', 'compras.impuesto', '=', 'impuesto.id')
                             ->select('compras.id', 'compras.tipo_identificacion', 'compras.num_compra', 'compras.fecha_compra', 'compras.impuesto', 'compras.total', 'compras.estado',
                             DB::raw('sum(detalle_factura_compras.cantidad*precio) as total'), 'proveedores.nombre_empresa')
                             ->where('compras.id', '=', $id)
                             ->orderBy('compras.id', 'desc')
                             ->groupBy('compras.id', 'compras.tipo_identificacion', 'compras.num_compra', 'compras.fecha_compra', 'compras.impuesto', 'compras.total', 'compras.estado', 'proveedores.nombre_empresa')
                             ->first();
+        // dd($compra->Impuesto->impuesto);
         
         // mostrar detalle
         $detalles = DetalleCompra::join('productos', 'detalle_factura_compras.idproducto', '=', 'productos.id')
@@ -208,12 +215,14 @@ class CompraController extends Controller
         $compra = Compra::join('proveedores', 'compras.idproveedor', '=', 'proveedores.id')
                             ->join('users', 'compras.idusuario', '=', 'users.id')
                             ->join('detalle_factura_compras', 'compras.id', '=', 'detalle_factura_compras.idcompra')
+                            ->join('impuesto', 'compras.impuesto', '=', 'impuesto.id')
                             ->select('compras.id', 'compras.tipo_identificacion', 'compras.num_compra', 'compras.created_at', 'compras.impuesto', DB::raw('sum(detalle_factura_compras.cantidad*precio) as total'), 'compras.estado', 'proveedores.nombre_empresa', 'proveedores.responsable', 'proveedores.tipo_documento', 'proveedores.num_documento', 'proveedores.direccion', 'proveedores.telefono', 'proveedores.email', 'users.usuario')
                             ->where('compras.id', '=', $id)
                             ->orderBy('compras.id', 'desc')
                             ->groupBy('compras.id', 'compras.tipo_identificacion', 'compras.num_compra', 'compras.created_at', 'compras.impuesto', 'compras.estado', 'proveedores.nombre_empresa', 'proveedores.responsable', 'proveedores.tipo_documento', 'proveedores.num_documento', 'proveedores.direccion', 'proveedores.telefono', 'proveedores.email', 'users.usuario')
                             ->take(1)
                             ->get();
+        // dd($compra[0]->Impuesto->impuesto);
 
         $detalles = DetalleCompra::join('productos', 'detalle_factura_compras.idproducto', '=', 'productos.id')
                                     ->select('detalle_factura_compras.cantidad', 'detalle_factura_compras.precio', 'productos.nombre as producto')

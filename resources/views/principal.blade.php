@@ -1,7 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,9 +8,10 @@
     <meta name="description" content="Sistema Compras-Ventas con Laravel y Vue Js- webtraining-it.com">
     <meta name="keyword" content="Sistema Compras-Ventas con Laravel y Vue Js">
     <title>{{ config('app.name', 'Laravel') }}</title>
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="image/png" href="{{asset('img/favicon.png')}}">
+    <link rel="stylesheet" type="image/ico" href="{{asset('img/favicon.png')}}" sizes="any">
     <!-- Icons -->
     <link href="{{asset('css/coreui-icons.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/flag-icon.min.css')}}" rel="stylesheet">
@@ -27,6 +27,7 @@
     <link href="{{asset('vendors/pnotify/dist/PNotifyBrightTheme.css')}}" rel="stylesheet" type="text/css" />
     <!-- Select2 -->
     <link href="{{asset('vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet" />     
+
        
     <!-- Contenido Styles Personales -->
     @yield('css')
@@ -72,7 +73,7 @@
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/pace.min.js')}}"></script>
     <script src="{{asset('js/perfect-scrollbar.min.js')}}"></script>
-    <!-- <script src="{{asset('js/coreui.min.js')}}"></script> -->
+    <script src="{{asset('js/coreui.min.js')}}"></script>
     <!-- Plugins and scripts required by all views -->
     <script src="{{asset('js/Chart.min.js')}}"></script>
     <!-- GenesisUI main scripts -->
@@ -80,12 +81,11 @@
     <!-- PNotify -->
     <script type="text/javascript" src="{{asset('vendors/pnotify/dist/iife/PNotify.js')}}"></script>
     <script type="text/javascript" src="{{asset('vendors/pnotify/dist/iife/PNotifyButtons.js')}}"></script>
-
-    <script src="{{asset('vendors/select2/dist/js/select2.full.min.js')}}"></script>
-    
+    <!-- Select2 -->
+    <script src="{{asset('vendors/select2/dist/js/select2.min.js')}}"></script>
     <!-- Contenido JS Personales -->
     @yield('js')
-
+    
 
 </body>
 

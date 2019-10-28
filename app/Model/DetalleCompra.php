@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Model\EstadoFactura;
 use App\Model\Producto;
+use App\Model\Impuesto;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,4 +35,6 @@ class DetalleCompra extends Model
     public function estadoFactura(){
         return $this->hasOne(EstadoFactura::class,'id_estado_factura','status');
     }
+
+    
 }

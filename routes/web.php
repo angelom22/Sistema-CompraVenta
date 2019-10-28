@@ -43,6 +43,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('categoria','CategoriaController');
         Route::resource('producto','ProductoController');
         Route::resource('cliente','ClienteController');
+        Route::resource('venta','VentaController');
+
+
     });
     
     // Middleware para Administrador 
@@ -52,9 +55,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('proveedor','ProveedorController');
         Route::resource('compra','CompraController');
         Route::get('/pdfCompra/{id}', 'CompraController@pdf')->name('Compra_pdf');
+        Route::resource('venta','VentaController');
         Route::resource('cliente','ClienteController');
         Route::resource('rol','RolController');
         Route::resource('usuario','UserController');
+
     });
 
     // Middleware para socio 
@@ -70,9 +75,9 @@ Route::group(['middleware' => ['auth']], function () {
     
 });
 
-Route::get('roles', function(){
-    return \App\Rol::with('users')->get();
-});
+// Route::get('roles', function(){
+//     return \App\Rol::with('users')->get();
+// });
 
 
 // Route::get('cliente', function () {

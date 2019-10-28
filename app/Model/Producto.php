@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Model;
-use App\Model\UnidadMedicion;
 
+use App\Model\UnidadMedicion;
 use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model

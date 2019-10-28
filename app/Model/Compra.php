@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\User; 
 use App\Model\Proveedor; 
+use App\Model\Impuesto; 
 use Illuminate\Database\Eloquent\Model;
 
 class Compra extends Model
@@ -23,7 +24,7 @@ class Compra extends Model
         'estado'
     ];
     
-    // es el usuario que ahce el registro
+    // es el usuario que hace el registro
     public function usuario(){
         return $this->belongsTo(User::class,'idusuario','id');
     }
@@ -34,5 +35,10 @@ class Compra extends Model
     }
 
     //funcion para el estado de la factura 
+
+    // Relacion con la tabla impuesto
+    public function Impuesto(){
+        return $this->hasOne(Impuesto::class,'id','impuesto');
+    }
 }
  

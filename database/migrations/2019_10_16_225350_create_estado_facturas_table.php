@@ -19,6 +19,9 @@ class CreateEstadoFacturasTable extends Migration
             // $table->timestamps();
 
             $table->foreign('id_estado_factura')->references('estado')->on('compras');
+            $table->foreign('id_estado_factura')->references('estado')->on('ventas');
+
+            
         });
         
         DB::table('estado_facturas')->insert(array('id_estado_factura'=>'1','nombre' => 'Registrada')); //azul
