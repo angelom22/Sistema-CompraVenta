@@ -10,10 +10,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    <link rel="icon" type="image/ico" href="{{asset('img/favicon.png')}}" sizes="any">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="image/ico" href="{{asset('img/favicon.png')}}" sizes="any">
     <!-- Icons -->
-    <link href="{{asset('css/coreui-icons.min.css')}}" rel="stylesheet">
+    <!-- <link href="{{asset('css/coreui-icons.min.css')}}" rel="stylesheet"> -->
     <link href="{{asset('css/flag-icon.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/simple-line-icons.min.css')}}" rel="stylesheet">
@@ -73,7 +73,7 @@
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/pace.min.js')}}"></script>
     <script src="{{asset('js/perfect-scrollbar.min.js')}}"></script>
-    <script src="{{asset('js/coreui.min.js')}}"></script>
+    <!-- <script src="{{asset('js/coreui.min.js')}}"></script> -->
     <!-- Plugins and scripts required by all views -->
     <script src="{{asset('js/Chart.min.js')}}"></script>
     <!-- GenesisUI main scripts -->
@@ -83,6 +83,8 @@
     <script type="text/javascript" src="{{asset('vendors/pnotify/dist/iife/PNotifyButtons.js')}}"></script>
     <!-- Select2 -->
     <script src="{{asset('vendors/select2/dist/js/select2.min.js')}}"></script>
+    
+    
     <!-- Contenido JS Personales -->
     @yield('js')
     

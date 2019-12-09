@@ -11,7 +11,10 @@ class Impuesto extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['nombre','impuesto'];
+    protected $fillable = [
+        'nombre',
+        'impuesto'
+    ];
 
     public $timestamps = false;
 

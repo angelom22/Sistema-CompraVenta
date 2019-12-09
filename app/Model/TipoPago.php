@@ -12,6 +12,7 @@ class TipoPago extends Model
     
     protected $fillable = [
         'nombre',
+        'detalle',
         'cantidad',
     ];
 

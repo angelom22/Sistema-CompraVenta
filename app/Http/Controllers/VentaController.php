@@ -30,10 +30,10 @@ class VentaController extends Controller
                             ->join('impuesto', 'ventas.impuesto', '=', 'impuesto.id')
                             ->join('estado_facturas', 'ventas.estado', '=', 'estado_facturas.id_estado_factura')
                             ->join('tipo_pago', 'ventas.tipo_pago', '=', 'tipo_pago.id_pago')
-                            ->select('ventas.id_venta', 'ventas.tipo_identificacion', 'ventas.num_venta', 'ventas.fecha_venta', 'ventas.total', 'ventas.nota', 'clientes.nombre as cliente', 'users.usuario', 'impuesto.impuesto', 'estado_facturas.nombre as estado_factura', 'tipo_pago.nombre as tipo_pago')
+                            ->select('ventas.id_venta', 'ventas.tipo_identificacion', 'ventas.num_venta', 'ventas.fecha_venta', 'ventas.total', 'ventas.nota', 'clientes.nombre as cliente', 'users.usuario', 'impuesto.nombre as impuesto', 'estado_facturas.id_estado_factura as estado_factura', 'tipo_pago.nombre as tipo_pago')
                             // ->where('ventas.num_venta', 'LIKE', '%' .$sql. '%')
                             ->orderBy('ventas.id_venta', 'desc')
-                            ->groupBy('ventas.id_venta', 'ventas.tipo_identificacion', 'ventas.num_venta', 'ventas.fecha_venta','ventas.total', 'users.usuario', 'clientes.nombre', 'impuesto.impuesto', 'estado_facturas.nombre', 'tipo_pago.nombre')
+                            ->groupBy('ventas.id_venta', 'ventas.tipo_identificacion', 'ventas.num_venta', 'ventas.fecha_venta','ventas.total', 'users.usuario', 'clientes.nombre', 'impuesto.nombre', 'estado_facturas.nombre', 'tipo_pago.nombre')
                             ->get();
 
             // return $ventas;
@@ -49,10 +49,19 @@ class VentaController extends Controller
     {
         // Listar los clientes en ventana modal
         $clientes = Cliente::get();
+        // dd($clientes);
 
         // Listar los productos en Ventana modal
-        $productos = Producto::join('detalle_factura_ventas', 'productos.id', '=', 'detalle_factura_ventas.idproducto')
-                                ->select('');
+        $productos = DB::table('productos as producto')
+                            ->join('detalle_factura_compras', 'producto.id', '=', 'detalle_factura_compras.idproducto')
+                            ->select(DB::raw('CONCAT(producto.codigo," ",producto.nombre) AS producto'),'producto.id','producto.stock','producto.precio_venta')
+                            ->where('producto.condicion', '=', '1')
+                            ->where('producto.stock', '>', '0')
+                            ->groupBy('producto', 'producto.id', 'producto.stock','producto.precio_venta')
+                            ->get();
+        // dd($productos);
+        
+        return view('venta.create', compact('clientes','productos'));
     }
 
     /**
@@ -63,7 +72,53 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+ 
+            DB::beginTransaction();
+            $mytime= Carbon::now('America/Caracas');
+
+            $venta = new Venta();
+            $venta->idcliente = $request->id_cliente;
+            $venta->idusuario = \Auth::user()->id;
+            $venta->tipo_identificacion = $request->tipo_identificacion;
+            $venta->num_venta = $request->num_venta;
+            $venta->fecha_venta = $mytime->toDateString();
+            $venta->impuesto = "0.20";
+            $venta->total=$request->total_pagar;
+            $venta->estado = 'Registrado';
+            $venta->save();
+
+            $id_producto = $request->id_producto;
+            $cantidad = $request->cantidad;
+            $descuento = $request->descuento;
+            $precio = $request->precio_venta;
+           
+            //Recorro todos los elementos
+            $cont=0;
+
+             while($cont < count($id_producto)){
+
+                $detalle = new DetalleVenta();
+                /*enviamos valores a las propiedades del objeto detalle*/
+                /*al idcompra del objeto detalle le envio el id del objeto venta, que es el objeto que se ingresó en la tabla ventas de la bd*/
+                /*el id es del registro de la venta*/
+                $detalle->idventa = $venta->id;
+                $detalle->idproducto = $id_producto[$cont];
+                $detalle->cantidad = $cantidad[$cont];
+                $detalle->precio = $precio[$cont];
+                $detalle->descuento = $descuento[$cont];           
+                $detalle->save();
+                $cont = $cont + 1;
+            }
+                
+            DB::commit();
+
+        } catch(Exception $e){
+            
+            DB::rollBack();
+        }
+
+        return Redirect::to('venta');
     }
 
     /**

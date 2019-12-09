@@ -126,15 +126,19 @@
 @endsection
 
 @section('js')
-
+<!-- Validar JS -->
+<script type="text/javascript" src="{{asset('js/validacion.js')}}"></script>
+<!-- DataTable -->
 <script type="text/javascript" src="{{asset('js/jquery-3.3.1.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/datatables.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('vendors/select2/dist/js/select2.min.js')}}"></script>
-
+<!-- Mascara para los inputs -->
+<script src="{{asset('js/jquery.maskedinput.min.js')}}"></script>
 <script>
-$('.select2').select2();
+    $('.select2').select2();
+    $('.input-mask-phone').mask('9999-9999999');
 </script>
 
 <script>
@@ -194,9 +198,6 @@ $(document).ready( function () {
 });
 </script>
 
-<script>
-$('.select2').select2();
-</script>
 
 <script>
     // MULTI-SELECTOR
@@ -258,5 +259,6 @@ $('.select2').select2();
 
 
 </script>
+
 
 @endsection

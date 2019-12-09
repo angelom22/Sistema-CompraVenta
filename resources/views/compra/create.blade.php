@@ -110,7 +110,7 @@
                                 <div class="col-md-3">
                                     <label class="form-control-label" for="precio_compra">Precio Compra <span style="color:red;">(*)</span></label>
                                     
-                                    <input type="number" id="precio_compra" name="precio_compra" class="form-control" placeholder="Ingrese precio de compra" pattern="[0-9]{0,15}">
+                                    <input type="text" id="precio_compra" name="precio_compra" class="form-control currency" placeholder="Ingrese precio de compra" pattern="[0-9/.]{0,15}">
                                 </div>
 
                                 <div class="col-md-3">
@@ -215,6 +215,12 @@
 @endsection
 
 @section('js')
+<!-- inputs currency 0.00-->
+<script src="{{{asset('js/jquery.inputmask.bundle.min.js')}}}"></script>
+<script>
+    $(".currency").inputmask('currency',{rightAlign: true, 'groupSeparator': '', 'autoGroup': true  });
+</script>
+
 <script>
      
     $(document).ready(function(){
@@ -250,7 +256,7 @@
         subtotal[cont] = cantidad*precio_compra;
         total = total+subtotal[cont];
         
-        var fila ='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-times fa-2x"></i></button></td> <td><input type="hidden" name="id_producto[]" value="'+id_producto+'">'+producto+'</td> <td><input type="number" id="precio_compra[]" name="precio_compra[]"  value="'+precio_compra+'"> </td>  <td><input type="number" name="cantidad[]" value="'+cantidad+'"> </td> <td>Bs'+subtotal[cont]+' </td></tr>';
+        var fila ='<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-danger btn-sm" onclick="eliminar('+cont+');"><i class="fa fa-times fa-2x"></i></button></td> <td><input type="hidden" name="id_producto[]" value="'+id_producto+'">'+producto+'</td> <td><input type="text" class="currency"  id="precio_compra[]" name="precio_compra[]"  value="'+precio_compra+'"> </td>  <td><input type="number" name="cantidad[]" value="'+cantidad+'"> </td> <td>Bs'+subtotal[cont]+ ' </td></tr>';
         cont++;
         limpiar();
         totales();
